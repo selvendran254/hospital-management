@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "backend/Dockerfile", "use": "@vercel/static-build", "config": { "distDir": "." } }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "https://$BACKEND_PUBLIC_URL/api/$1" },
+    { "src": "/healthz", "dest": "https://$BACKEND_PUBLIC_URL/api/actuator/health" }
+  ]
+}

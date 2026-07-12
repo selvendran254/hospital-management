@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+frontend/dist/
+
+# Build
+backend/target/
+*.jar
+*.war
+*.class
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+.env.*.local
+frontend/.env
+
+# Dependencies
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Uploads
+uploads/
+backend/uploads/
+
+# Docker
+postgres_data/

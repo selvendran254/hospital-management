@@ -1,0 +1,88 @@
+spring:
+  application:
+    name: hospital-management
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/hospital_db}
+    username: ${SPRING_DATASOURCE_USERNAME:hospital_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:hospital_pass}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:1025}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /api
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:change-this-jwt-secret-key-to-a-secure-256-bit-value-in-production}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+  storage:
+    provider: ${APP_STORAGE_PROVIDER:local}
+    local:
+      base-path: ${FILE_STORAGE_PATH:./uploads}
+      base-url: ${FILE_STORAGE_URL:http://localhost:8080/api/files}
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://localhost:5173}
+  rate-limit:
+    enabled: ${RATE_LIMIT_ENABLED:false}
+    requests-per-minute: ${RATE_LIMIT_RPM:100}
+  integrations:
+    razorpay:
+      key-id: ${RAZORPAY_KEY_ID:}
+      key-secret: ${RAZORPAY_KEY_SECRET:}
+    twilio:
+      account-sid: ${TWILIO_ACCOUNT_SID:}
+      auth-token: ${TWILIO_AUTH_TOKEN:}
+      from-sms: ${TWILIO_FROM_SMS:}
+      from-whatsapp: ${TWILIO_FROM_WHATSAPP:}
+    jitsi:
+      base-url: ${JITSI_BASE_URL:https://meet.jit.si}
+  backup:
+    directory: ${DB_BACKUP_DIR:./backups}
+    cron: ${DB_BACKUP_CRON:0 0 2 * * *}
+  compliance:
+    encryption-at-rest: ${COMPLIANCE_ENCRYPTION_AT_REST:true}
+    encryption-in-transit: ${COMPLIANCE_ENCRYPTION_IN_TRANSIT:true}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+
+logging:
+  level:
+    com.hospital.management: INFO
+    org.springframework.security: WARN
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
